@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Firebase Phone Number Auth</title>
+</head>
+<body>
+  <form>
+    <input type="text" id="verificationcode" value="enter verification">
+    <input type="button" value="Submit" onclick="myFunction()">
+  </form>
+  <div id="recaptcha-container"></div>
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  <script type="text/javascript">
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC9oamh2233E_WHTbL5CrTOwGPcHUNDb1c",
+                authDomain: "tresco-eeb4f.firebaseapp.com",
+                projectId: "tresco-eeb4f",
+                storageBucket: "tresco-eeb4f.appspot.com",
+                messagingSenderId: "169182889848",
+                appId: "1:169182889848:web:6b40fb39a5cb21a6f56a8d",
+                measurementId: "G-F2W4KZWQYS"
+  };
+  firebase.initializeApp(config);
+</script>
+<script type="text/javascript">
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+  firebase.auth().signInWithPhoneNumber("replace with your phone number with country code, start with +1 if US.", window.recaptchaVerifier) 
+  .then(function(confirmationResult) {
+    window.confirmationResult = confirmationResult;
+    console.log(confirmationResult);
+  });
+  var myFunction = function() {
+    window.confirmationResult.confirm(document.getElementById("verificationcode").value)
+    .then(function(result) {
+      console.log(result);
+    }).catch(function(error) {
+      console.log(error);
+    });
+  };
+  </script>
+</body>
+</html>
